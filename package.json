@@ -1,0 +1,23 @@
+{
+  "name": "allons-y-events-hub-client",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeCorico/allons-y-events-hub-client.git"
+  },
+  "author": "CodeCorico <hello@codecorico.com>",
+  "bugs": {
+    "url": "https://github.com/CodeCorico/allons-y-events-hub-client/issues"
+  },
+  "homepage": "https://github.com/CodeCorico/allons-y-events-hub-client",
+  "engines": {
+    "node": ">=4.1",
+    "npm": ">=3.2"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "socket.io-client": "^1.4.8"
+  }
+}

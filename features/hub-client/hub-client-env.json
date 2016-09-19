@@ -1,0 +1,18 @@
+{
+  "env": [{
+    "type": "confirm",
+    "name": "EVENTS_HUB_CLIENT",
+    "message": "Enable Events HUB Client:"
+  }, {
+    "type": "input",
+    "name": "EVENTS_HUB_CLIENT_URL",
+    "message": "URL (with port) to connect the client to the Events HUB server:",
+    "default": "http://localhost:8085",
+    "when": "EVENTS_HUB_CLIENT=true"
+  }, {
+    "type": "input",
+    "name": "EVENTS_HUB_CLIENT_SECRET",
+    "message": "Secret passphrase of the Events HUB targeted server:",
+    "when": "EVENTS_HUB_CLIENT=true"
+  }]
+}
