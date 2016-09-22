@@ -17,8 +17,11 @@ module.exports = function($allonsy, $processIndex, $SocketsService, $server) {
 
   function _toHubEmit(event, message) {
     message = typeof message == 'object' ? message : {};
-    message.event = event;
-    message.noOwner = true;
+    message = {
+      message: message,
+      event: event,
+      noOwner: true
+    };
 
     message = _encrypt(JSON.stringify(message), _hubSecret);
 
@@ -29,6 +32,29 @@ module.exports = function($allonsy, $processIndex, $SocketsService, $server) {
     var cipher = crypto.createCipher('aes-256-ctr', secret);
 
     return cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
+  }
+
+  function _decrypt(text, secret) {
+    var decipher = crypto.createDecipher('aes-256-ctr', secret);
+
+    return decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
+  }
+
+  function _decryptMessage(message, secret) {
+    if (!message || typeof message != 'string') {
+      return false;
+    }
+
+    message = _decrypt(message, secret);
+
+    try {
+      message = JSON.parse(message);
+    }
+    catch (ex) {
+      return false;
+    }
+
+    return message;
   }
 
   $SocketsService.socketHub = function() {
@@ -82,5 +108,15 @@ module.exports = function($allonsy, $processIndex, $SocketsService, $server) {
     _socket = null;
 
     $allonsy.outputWarning('  Disconnected from the Events HUB (' + _hubUrl + ')');
+  });
+
+  _socket.on('!', function(message) {
+    message = _decryptMessage(message, _hubSecret);
+
+    if (!message) {
+      return;
+    }
+
+    $SocketsService.fire(message.event, message.message);
   });
 };
