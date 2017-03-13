@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Send crypted sockets events to an events-hub.",
   "license": "MIT",
-  "homepage": "http://allons-y.io",
+  "homepage": "https://allons-y.io",
   "author": "CodeCorico <hello@codecorico.com>",
   "bugs": "https://github.com/CodeCorico/allons-y-events-hub-client/issues",
   "repository": {
@@ -14,10 +14,11 @@
     "node": ">=4.1",
     "npm": ">=3.2"
   },
+  "devDependencies": {
+    "allons-y-dev-chore": "^1.0.0"
+  },
   "dependencies": {
-    "allons-y-dotenv": "^1.0.0",
-    "allons-y-express": "^1.0.0",
-    "allons-y-socketio": "^1.0.0",
+    "allons-y-socketio": "^1.0.3",
     "socket.io-client": "^1.4.8"
   }
 }
