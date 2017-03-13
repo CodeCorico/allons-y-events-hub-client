@@ -57,6 +57,10 @@ module.exports = function($allonsy, $processIndex, $SocketsService, $server) {
     return message;
   }
 
+  $SocketsService.hub = new (function() {
+    require('events-manager').EventsManager.call(this);
+  })();
+
   $SocketsService.socketHub = function() {
     return _socket;
   };
@@ -117,6 +121,12 @@ module.exports = function($allonsy, $processIndex, $SocketsService, $server) {
       return;
     }
 
-    $SocketsService.fire(message.event, message.message);
+    if (message.message && typeof message.message == 'object' && message.message.directEmit) {
+      delete message.message.directEmit;
+
+      $SocketsService.emit(null, null, null, message.event, message.message);
+    }
+
+    $SocketsService.hub.fire(message.event, message.message);
   });
 };
